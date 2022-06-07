@@ -1,52 +1,53 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
-using UnityEngine.SceneManagement; // UnityEngine.SceneManagemnt‚Ì‹@”\‚ğg—p
+using UnityEngine.SceneManagement; // UnityEngine.SceneManagemntã®æ©Ÿèƒ½ã‚’ä½¿ç”¨
 using System.IO;
 
 
+
 //
-// Ã~‰æ—p
+// é™æ­¢ç”»ç”¨
 //
 //
 // 
 //[System.Serializable]
-// §Œä—pƒpƒ‰ƒ[ƒ^@JSONƒtƒ@ƒCƒ‹Œ`®‚Åw’è‚·‚é‚±‚Æ
+// åˆ¶å¾¡ç”¨ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã€€JSONãƒ•ã‚¡ã‚¤ãƒ«å½¢å¼ã§æŒ‡å®šã™ã‚‹ã“ã¨
 //
 public class Control_Info
 {
-    public string ParamFile; // §Œäƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹–¼
-    public float Period; // üŠúi•bj
-    public float Duty; // ƒfƒ…[ƒeƒB”äi<1.0j
-    public float PULSE_STEP; // ’è”
-    public float PULSE_MAX; // ’è”
-    public float PULSE_INITIAL; // ’è”
-    public float PULSE_MIN; // ’è”
-    public float DUTY_INITIAL; // ’è”
-    public float DUTY_MIN; // ’è”
-    public float DUTY_MAX; // ’è”
-    public float DUTY_STEP; // ’è”
-    public float PulseStartTime; // –¬”ŠJni•bj
-    public int PulseStartFrame; // –¬”ŠJniƒtƒŒ[ƒ€Š·Zj
-    public float PulseStopTime; // –¬”’â~i•bj
-    public int PulseStopFrame; // –¬”’â~iƒtƒŒ[ƒ€Š·Zj
+    public string ParamFile; // åˆ¶å¾¡ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«å
+    public float Period; // å‘¨æœŸï¼ˆç§’ï¼‰
+    public float Duty; // ãƒ‡ãƒ¥ãƒ¼ãƒ†ã‚£æ¯”ï¼ˆ<1.0ï¼‰
+    public float PULSE_STEP; // å®šæ•°
+    public float PULSE_MAX; // å®šæ•°
+    public float PULSE_INITIAL; // å®šæ•°
+    public float PULSE_MIN; // å®šæ•°
+    public float DUTY_INITIAL; // å®šæ•°
+    public float DUTY_MIN; // å®šæ•°
+    public float DUTY_MAX; // å®šæ•°
+    public float DUTY_STEP; // å®šæ•°
+    public float PulseStartTime; // è„ˆæ‹é–‹å§‹æ™‚åˆ»ï¼ˆç§’ï¼‰
+    public int PulseStartFrame; // è„ˆæ‹é–‹å§‹æ™‚åˆ»ï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ æ›ç®—ï¼‰
+    public float PulseStopTime; // è„ˆæ‹åœæ­¢æ™‚åˆ»ï¼ˆç§’ï¼‰
+    public int PulseStopFrame; // è„ˆæ‹åœæ­¢æ™‚åˆ»ï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ æ›ç®—ï¼‰
 
 
-    // •¶š—ñ‚©‚çJSONƒf[ƒ^‚ğì‚é
+    // æ–‡å­—åˆ—ã‹ã‚‰JSONãƒ‡ãƒ¼ã‚¿ã‚’ä½œã‚‹
     public static Control_Info CreateFromJSON(string jsonString)
     {
         return JsonUtility.FromJson<Control_Info>(jsonString);
     }
 
-    // JSONƒf[ƒ^‚©‚ç•¶š—ñ‚ğì‚é
+    // JSONãƒ‡ãƒ¼ã‚¿ã‹ã‚‰æ–‡å­—åˆ—ã‚’ä½œã‚‹
     public string SaveToString()
     {
         return JsonUtility.ToJson(this);
     }
 
-    // •¶š—ñ‚ğV‚µ‚¢ƒf[ƒ^‚Å‘‚«Š·‚¦‚é
+    // æ–‡å­—åˆ—ã‚’æ–°ã—ã„ãƒ‡ãƒ¼ã‚¿ã§æ›¸ãæ›ãˆã‚‹
     public void OverWrite(string savedData)
     {
         JsonUtility.FromJsonOverwrite(savedData, this);
@@ -54,27 +55,27 @@ public class Control_Info
 }
 
 //
-// Raspberry Pi ‚Æ‚Ìî•ñŒğŠ·‚Ég—p‚·‚é
+// Raspberry Pi ã¨ã®æƒ…å ±äº¤æ›ã«ä½¿ç”¨ã™ã‚‹
 //
 public class RaspControl
 {
     public string RunMode; // START or STOP
-    public float Period; // üŠúi•bj
-    public float Duty; // ƒfƒ…[ƒeƒB”äi<1.0j
+    public float Period; // å‘¨æœŸï¼ˆç§’ï¼‰
+    public float Duty; // ãƒ‡ãƒ¥ãƒ¼ãƒ†ã‚£æ¯”ï¼ˆ<1.0ï¼‰
 
-    // •¶š—ñ‚©‚çJSONƒf[ƒ^‚ğì‚é
+    // æ–‡å­—åˆ—ã‹ã‚‰JSONãƒ‡ãƒ¼ã‚¿ã‚’ä½œã‚‹
     public static RaspControl CreateFromJSON(string jsonString)
     {
         return JsonUtility.FromJson<RaspControl>(jsonString);
     }
 
-    // JSONƒf[ƒ^‚©‚ç•¶š—ñ‚ğì‚é
+    // JSONãƒ‡ãƒ¼ã‚¿ã‹ã‚‰æ–‡å­—åˆ—ã‚’ä½œã‚‹
     public string SaveToString()
     {
         return JsonUtility.ToJson(this);
     }
 
-    // •¶š—ñ‚ğV‚µ‚¢ƒf[ƒ^‚Å‘‚«Š·‚¦‚é
+    // æ–‡å­—åˆ—ã‚’æ–°ã—ã„ãƒ‡ãƒ¼ã‚¿ã§æ›¸ãæ›ãˆã‚‹
     public void OverWrite(string savedData)
     {
         JsonUtility.FromJsonOverwrite(savedData, this);
@@ -88,13 +89,13 @@ public class RaspControl
 //[Serializable]
 public class TrainingCTRL : MonoBehaviour
 {
-    Control_Info InitialParam = new Control_Info(); // ‰Šú‰»—pƒtƒ@ƒCƒ‹‚©‚ç“ü—Í‚³‚ê‚éƒpƒ‰ƒ[ƒ^
-    RaspControl ControlParam = new RaspControl(); // Raspberry Pi ‚Ì§Œä—p
-    private float ProgramStartTime; // ƒvƒƒOƒ‰ƒ€‚ÌŠJn
-    private float PulseStartTime; // –¬”ŠJni•bj
-    private int PulseStartFrame; // –¬”ŠJniƒtƒŒ[ƒ€Š·Zj
-    private float PulseStopTime; // –¬”’â~i•bj
-    private int PulseStopFrame; // –¬”’â~iƒtƒŒ[ƒ€Š·Zj
+    Control_Info InitialParam = new Control_Info(); // åˆæœŸåŒ–ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰å…¥åŠ›ã•ã‚Œã‚‹ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
+    RaspControl ControlParam = new RaspControl(); // Raspberry Pi ã®åˆ¶å¾¡ç”¨
+    private float ProgramStartTime; // ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®é–‹å§‹æ™‚åˆ»
+    private float PulseStartTime; // è„ˆæ‹é–‹å§‹æ™‚åˆ»ï¼ˆç§’ï¼‰
+    private int PulseStartFrame; // è„ˆæ‹é–‹å§‹æ™‚åˆ»ï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ æ›ç®—ï¼‰
+    private float PulseStopTime; // è„ˆæ‹åœæ­¢æ™‚åˆ»ï¼ˆç§’ï¼‰
+    private int PulseStopFrame; // è„ˆæ‹åœæ­¢æ™‚åˆ»ï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ æ›ç®—ï¼‰
     //
     // Start is called before the first frame update
     //
@@ -102,11 +103,11 @@ public class TrainingCTRL : MonoBehaviour
     {
         Debug.Log("Control Program Start!");
         Debug.Log(" Time.deltaTime : " + Time.deltaTime);
-        // ‰Šúİ’è—pƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+        // åˆæœŸè¨­å®šç”¨ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 //        string initFile = File.ReadAllText("C:/Users/raspberry/UTfolder/InitControl.json");
         string initFile = "C:/Users/raspberry/UTfolder/InitControl.json";
-//        Debug.Log("‰Šúİ’è—pƒtƒ@ƒCƒ‹ : " + initFile);
-        if (File.Exists(initFile)) // ƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚éê‡
+//        Debug.Log("åˆæœŸè¨­å®šç”¨ãƒ•ã‚¡ã‚¤ãƒ« : " + initFile);
+        if (File.Exists(initFile)) // ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹å ´åˆ
         {
             string datastr = "";
             StreamReader reader;
@@ -120,13 +121,13 @@ public class TrainingCTRL : MonoBehaviour
             }
             catch (System.IO.IOException ex)
             {
-                Debug.Log("‰Šúİ’è—pƒtƒ@ƒCƒ‹‚ğŠJ‚­‚Æ‚«‚ÉƒGƒ‰[‚É‚È‚è‚Ü‚µ‚½" + initFile + "  ERROR:" + ex);
+                Debug.Log("åˆæœŸè¨­å®šç”¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã¨ãã«ã‚¨ãƒ©ãƒ¼ã«ãªã‚Šã¾ã—ãŸ" + initFile + "  ERROR:" + ex);
             }
         }
         else
         {
-            Debug.Log("‰Šúİ’è—pƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚Ü‚¹‚ñ : "+ initFile);
-            // Unity‚ğI—¹‚³‚¹‚é
+            Debug.Log("åˆæœŸè¨­å®šç”¨ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ã¾ã›ã‚“ : "+ initFile);
+            // Unityã‚’çµ‚äº†ã•ã›ã‚‹
 #if UNITY_EDITOR
       UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_STANDALONE
@@ -139,39 +140,39 @@ public class TrainingCTRL : MonoBehaviour
 
         //        InitialParam = JsonUtility.FromJson<Control_Info>(initFile);
 
-        // Raspberry Pi §Œäƒpƒ‰ƒ[ƒ^‚Ìİ’è
+        // Raspberry Pi åˆ¶å¾¡ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š
         ControlParam.RunMode = "STOP";
         ControlParam.Period = InitialParam.Period;
         ControlParam.Duty = InitialParam.Duty;
 
-        // Raspberry Pi §Œäƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹‚Ì‘‚«‚İ
+        // Raspberry Pi åˆ¶å¾¡ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã®æ›¸ãè¾¼ã¿
 //        Debug.Log("test : " + InitialParam.ParamFile + " : " + ControlParam.SaveToString());
         try
         {
             File.WriteAllText(InitialParam.ParamFile, ControlParam.SaveToString());
-            Debug.Log("Ã~‰æ—p@Raspberry Pi §Œäƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹‚Ì‘‚«‚İ");
+            Debug.Log("é™æ­¢ç”»ç”¨ã€€Raspberry Pi åˆ¶å¾¡ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã®æ›¸ãè¾¼ã¿");
         }
         catch (System.IO.IOException ex)
         {
-            Debug.Log("Ã~‰æ—p@§Œäƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹‚Ì‘‚«‚İ‚ÅƒGƒ‰[‚É‚È‚è‚Ü‚µ‚½" + InitialParam.ParamFile + "  ERROR:" + ex);
+            Debug.Log("é™æ­¢ç”»ç”¨ã€€åˆ¶å¾¡ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã®æ›¸ãè¾¼ã¿ã§ã‚¨ãƒ©ãƒ¼ã«ãªã‚Šã¾ã—ãŸ" + InitialParam.ParamFile + "  ERROR:" + ex);
         }
 
-        ProgramStartTime = Time.time; // Œ»İ‚Ì
-        PulseStartTime = InitialParam.PulseStartTime + ProgramStartTime; // –¬”ŠJni•bj
-        PulseStartFrame = (int)(PulseStartTime / Time.deltaTime); // –¬”ŠJniƒtƒŒ[ƒ€Š·Zj
-        PulseStopTime = InitialParam.PulseStopTime + ProgramStartTime; // –¬”’â~i•bj
-        PulseStopFrame = (int)(PulseStopTime / Time.deltaTime); // –¬”’â~iƒtƒŒ[ƒ€Š·Zj
+        ProgramStartTime = Time.time; // ç¾åœ¨ã®æ™‚åˆ»
+        PulseStartTime = InitialParam.PulseStartTime + ProgramStartTime; // è„ˆæ‹é–‹å§‹æ™‚åˆ»ï¼ˆç§’ï¼‰
+        PulseStartFrame = (int)(PulseStartTime / Time.deltaTime); // è„ˆæ‹é–‹å§‹æ™‚åˆ»ï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ æ›ç®—ï¼‰
+        PulseStopTime = InitialParam.PulseStopTime + ProgramStartTime; // è„ˆæ‹åœæ­¢æ™‚åˆ»ï¼ˆç§’ï¼‰
+        PulseStopFrame = (int)(PulseStopTime / Time.deltaTime); // è„ˆæ‹åœæ­¢æ™‚åˆ»ï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ æ›ç®—ï¼‰
         Debug.Log("START time : " + PulseStartTime + " PulseStopTime" + PulseStopTime);
     }
 
     //
     // Fixed Update 
-    // Editv¨uProject Settingv¨uTimev FixedTimestep 0.5
+    // Editã€â†’ã€ŒProject Settingã€â†’ã€ŒTimeã€ FixedTimestep 0.5
     //
     private void FixedUpdate()
     {
         /*
-            if ((Time.time > PulseStartTime)&& (Time.time < PulseStopTime) && (ControlParam.RunMode == "STOP")) // ”“®ŠJn‚ğ‰ß‚¬‚½ê‡
+            if ((Time.time > PulseStartTime)&& (Time.time < PulseStopTime) && (ControlParam.RunMode == "STOP")) // æ‹å‹•é–‹å§‹æ™‚åˆ»ã‚’éããŸå ´åˆ
             {
                 ControlParam.RunMode = "START";
                 Debug.Log("Pulse START !  " + Time.time);
@@ -183,7 +184,7 @@ public class TrainingCTRL : MonoBehaviour
             }
         */
         Debug.Log("ControlParam.RunMode  :  " + ControlParam.RunMode);
-        // §Œäƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹‚Ì‘‚«‚İ
+        // åˆ¶å¾¡ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã®æ›¸ãè¾¼ã¿
         File.WriteAllText(InitialParam.ParamFile, ControlParam.SaveToString());
 
     }
@@ -196,7 +197,7 @@ public class TrainingCTRL : MonoBehaviour
 
 
         //
-        // –¬”‚Ì§Œä
+        // è„ˆæ‹ã®åˆ¶å¾¡
         //
         var keyboard = Keyboard.current;
         if (keyboard != null)
@@ -241,11 +242,11 @@ public class TrainingCTRL : MonoBehaviour
             else if (keyboard.qKey.wasPressedThisFrame)
             {
 //                WebCamTexture webCamTexture = new WebCamTexture();
-//                webCamTexture.Stop(); // ƒJƒƒ‰‚ğ’â~
+//                webCamTexture.Stop(); // ã‚«ãƒ¡ãƒ©ã‚’åœæ­¢
 
                ControlParam.RunMode = "STOP";
                 File.WriteAllText(InitialParam.ParamFile, ControlParam.SaveToString());
-                // ƒXƒ^[ƒgƒƒjƒ…[‚ÉØ‚è‘Ö‚¦‚é
+                // ã‚¹ã‚¿ãƒ¼ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
                 SceneManager.LoadScene("StartHere");
             }
         }

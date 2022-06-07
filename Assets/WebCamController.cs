@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement; // UnityEngine.SceneManagemntの機能を使用
+using UnityEngine.InputSystem;
 
 public class WebCamController : MonoBehaviour
 {
@@ -14,11 +15,6 @@ public class WebCamController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-//        WebCamTexture webCamTexture = new WebCamTexture();
-//        Renderer renderer = GetComponent<Renderer>();
-//        renderer.material.mainTexture = webCamTexture;
-//        webCamTexture.Play();
-
         Debug.Log("Web Cam Start !");
         WebCamDevice[] devices = WebCamTexture.devices;
         webcamTexture = new WebCamTexture(devices[0].name, this.width, this.height, this.fps);
@@ -30,6 +26,18 @@ public class WebCamController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var keyboard = Keyboard.current;
+        if (keyboard != null)
+        {
+            // Debug.Log("キーボード");
+            if (keyboard.qKey.wasPressedThisFrame)
+            {
+                // カメラの停止
+                webcamTexture.Stop();
+                // スタートメニューに切り替える
+                SceneManager.LoadScene("StartHere");
+            }
+        }
 
     }
 }

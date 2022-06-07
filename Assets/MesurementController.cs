@@ -126,6 +126,7 @@ public class MesurementController : MonoBehaviour
                     {
                         Debug.Log("4 ファイルを開くときにエラーになりました" + ex);
                     }
+
                 }
                 else // 立位のデータを入れる
                 {
@@ -148,10 +149,12 @@ public class MesurementController : MonoBehaviour
                     {
                         Debug.Log("5 ファイルを開くときにエラーになりました" + ex);
                     }
+
                 }
             }
             // スタートメニューに切り替える
             SceneManager.LoadScene("StartHere");
+
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {

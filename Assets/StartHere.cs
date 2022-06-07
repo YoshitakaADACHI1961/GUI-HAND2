@@ -36,6 +36,7 @@ public class StartHere : MonoBehaviour
                 PlayerPrefs.SetInt("MODE", 2);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("MeasurementScene");
+
             }
             else if (keyboard.cKey.wasPressedThisFrame)
             {
@@ -43,6 +44,8 @@ public class StartHere : MonoBehaviour
                 PlayerPrefs.SetInt("MODE", 1);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("InitPosition");
+
+
             }
             else if (keyboard.zKey.wasPressedThisFrame)
             {
@@ -50,6 +53,8 @@ public class StartHere : MonoBehaviour
                 PlayerPrefs.SetInt("MODE", 2);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("InitPosition");
+
+
             }
             else if (keyboard.rKey.wasPressedThisFrame)
             {
@@ -64,20 +69,6 @@ public class StartHere : MonoBehaviour
                 PlayerPrefs.SetInt("MODE", 2);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("TrainingScene");
-            }
-            else if (keyboard.oKey.wasPressedThisFrame)
-            {
-                // 座位の実行
-                PlayerPrefs.SetInt("MODE", 1);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("MovieScene");
-            }
-            else if (keyboard.uKey.wasPressedThisFrame)
-            {
-                // 立位の実行
-                PlayerPrefs.SetInt("MODE", 2);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("MovieScene");
             }
         }
     }
