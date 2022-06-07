@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -6,16 +6,16 @@ using System.IO;
 
 public class CylinderL : MonoBehaviour
 {
-    // Àsƒ‚[ƒh
+    // å®Ÿè¡Œãƒ¢ãƒ¼ãƒ‰
     int runMode = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        //uMODEv‚Æ‚¢‚¤ƒL[‚Å•Û‘¶‚³‚ê‚Ä‚¢‚éInt’l‚ğ“Ç‚İ‚İ
+        //ã€ŒMODEã€ã¨ã„ã†ã‚­ãƒ¼ã§ä¿å­˜ã•ã‚Œã¦ã„ã‚‹Intå€¤ã‚’èª­ã¿è¾¼ã¿
         runMode = PlayerPrefs.GetInt("MODE");
 
-        // “Ç‚İ‚İ
+        // èª­ã¿è¾¼ã¿
         string DataFile = "C:/Users/raspberry/UTfolder/PosController.json";
         string datastr = "";
         StreamReader reader;
@@ -27,20 +27,20 @@ public class CylinderL : MonoBehaviour
         }
         catch (System.IO.IOException ex)
         {
-            Debug.Log("1 ƒtƒ@ƒCƒ‹‚ğŠJ‚­‚Æ‚«‚ÉƒGƒ‰[‚É‚È‚è‚Ü‚µ‚½" + ex);
+            Debug.Log("1 ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã¨ãã«ã‚¨ãƒ©ãƒ¼ã«ãªã‚Šã¾ã—ãŸ" + ex);
         }
 
         ControllerPos controllerPos = JsonUtility.FromJson<ControllerPos>(datastr);
 
-        if (runMode == 1) // ÀˆÊ‚Ìƒf[ƒ^‚ğ“ü‚ê‚é
+        if (runMode == 1) // åº§ä½ã®ãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã‚‹
         {
             transform.position = controllerPos.sitPosL;
-            Debug.Log("ÀˆÊ@Cylinder L  = " + transform.position);
+            Debug.Log("åº§ä½ã€€Cylinder L  = " + transform.position);
         }
-        else // —§ˆÊ‚Ìƒf[ƒ^‚ğ“ü‚ê‚é
+        else // ç«‹ä½ã®ãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã‚‹
         {
             transform.position = controllerPos.standPosL;
-            Debug.Log("—§ˆÊ@Cylinder L = " + transform.position);
+            Debug.Log("ç«‹ä½ã€€Cylinder L = " + transform.position);
         }
 
     }
@@ -51,7 +51,7 @@ public class CylinderL : MonoBehaviour
         
     }
 //
-// class ‚ğì¬‚·‚é
+// class ã‚’ä½œæˆã™ã‚‹
 //
 [System.Serializable]
 public class ControllerPos

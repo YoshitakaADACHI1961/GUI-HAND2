@@ -1,18 +1,18 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; // UnityEngine.SceneManagemnt‚Ì‹@”\‚ğg—p
+using UnityEngine.SceneManagement; // UnityEngine.SceneManagemntã®æ©Ÿèƒ½ã‚’ä½¿ç”¨
 using System.IO;
 using System;
 
 // 
-// Oculus‚©‚çŒ©‚½ƒRƒ“ƒgƒ[ƒ‰i¶‰Ej‚ÌˆÊ’u‚Æp¨‚ğŒv‘ª‚·‚é
-// ubv‚ğ‰Ÿ‚·‚ÆÀˆÊ‚ÌŒv‘ª
-// u‚v‚ğ‰Ÿ‚·‚Æ—§ˆÊ‚ÌŒv‘ª
+// Oculusã‹ã‚‰è¦‹ãŸã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ï¼ˆå·¦å³ï¼‰ã®ä½ç½®ã¨å§¿å‹¢ã‚’è¨ˆæ¸¬ã™ã‚‹
+// ã€Œbã€ã‚’æŠ¼ã™ã¨åº§ä½ã®è¨ˆæ¸¬
+// ã€Œï½ã€ã‚’æŠ¼ã™ã¨ç«‹ä½ã®è¨ˆæ¸¬
 // 
 public class MesurementController : MonoBehaviour
 {
-    // Àsƒ‚[ƒh
+    // å®Ÿè¡Œãƒ¢ãƒ¼ãƒ‰
     int runMode = 0;
 
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class MesurementController : MonoBehaviour
     {
         Debug.Log("Start MesurementController !");
 
-        //uMODEv‚Æ‚¢‚¤ƒL[‚Å•Û‘¶‚³‚ê‚Ä‚¢‚éInt’l‚ğ“Ç‚İ‚İ
+        //ã€ŒMODEã€ã¨ã„ã†ã‚­ãƒ¼ã§ä¿å­˜ã•ã‚Œã¦ã„ã‚‹Intå€¤ã‚’èª­ã¿è¾¼ã¿
         runMode = PlayerPrefs.GetInt("MODE");
     }
 
@@ -29,9 +29,9 @@ public class MesurementController : MonoBehaviour
     {
         if (OVRInput.GetDown(OVRInput.RawButton.RHandTrigger) || OVRInput.GetDown(OVRInput.RawButton.LHandTrigger))
         {
-            Debug.Log("‰E‚Ü‚½‚Í¶‚Ì’†wƒOƒŠƒbƒv‚ğ‰Ÿ‚µ‚½!");
+            Debug.Log("å³ã¾ãŸã¯å·¦ã®ä¸­æŒ‡ã‚°ãƒªãƒƒãƒ—ã‚’æŠ¼ã—ãŸ!");
 
-            //  ‰Eè‚Æ¶è@ƒRƒ“ƒgƒ[ƒ‰[‚ÌˆÊ’u‚ğæ“¾
+            //  å³æ‰‹ã¨å·¦æ‰‹ã€€ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®ä½ç½®ã‚’å–å¾—
             Vector3 LocalPos_R = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
             Vector3 LocalPos_L = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
             Quaternion LocalRotation_R = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch);
@@ -39,10 +39,10 @@ public class MesurementController : MonoBehaviour
 
             //            Debug.Log(LocalPos_R+","+LocalRotation_R + "," + LocalPos_L + "," + LocalRotation_L);
 
-            // ƒf[ƒ^‚ğ“ü‚ê‚Ä‚¨‚­ƒtƒ@ƒCƒ‹
+            // ãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã¦ãŠããƒ•ã‚¡ã‚¤ãƒ«
             string DataFile = "C:/Users/raspberry/UTfolder/PosController.json";
-            // ƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚Ä‚¢‚½‚ç‘‚«Š·‚¦‚ğ‚·‚éB‚»‚¤‚Å‚È‚¯‚ê‚ÎV‚µ‚­ì¬‚·‚é
-            if (File.Exists(DataFile)) // ƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚éê‡
+            // ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ã¦ã„ãŸã‚‰æ›¸ãæ›ãˆã‚’ã™ã‚‹ã€‚ãã†ã§ãªã‘ã‚Œã°æ–°ã—ãä½œæˆã™ã‚‹
+            if (File.Exists(DataFile)) // ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹å ´åˆ
             {
                 string datastr = "";
                 StreamReader reader;
@@ -54,12 +54,12 @@ public class MesurementController : MonoBehaviour
                 }
                 catch (System.IO.IOException ex)
                 {
-                    Debug.Log("1 ƒtƒ@ƒCƒ‹‚ğŠJ‚­‚Æ‚«‚ÉƒGƒ‰[‚É‚È‚è‚Ü‚µ‚½" + ex);
+                    Debug.Log("1 ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã¨ãã«ã‚¨ãƒ©ãƒ¼ã«ãªã‚Šã¾ã—ãŸ" + ex);
                 }
 
                 ControllerPos controllerPos = JsonUtility.FromJson<ControllerPos>(datastr);
 
-                if (runMode == 1) // ÀˆÊ‚Ìƒf[ƒ^‚ğ“ü‚ê‚é
+                if (runMode == 1) // åº§ä½ã®ãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã‚‹
                 {
                     StreamWriter writer;
                     controllerPos.sitPosR = LocalPos_R;
@@ -77,10 +77,10 @@ public class MesurementController : MonoBehaviour
                     }
                     catch (System.IO.IOException ex)
                     {
-                        Debug.Log("2 ƒtƒ@ƒCƒ‹‚ğŠJ‚­‚Æ‚«‚ÉƒGƒ‰[‚É‚È‚è‚Ü‚µ‚½" + ex);
+                        Debug.Log("2 ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã¨ãã«ã‚¨ãƒ©ãƒ¼ã«ãªã‚Šã¾ã—ãŸ" + ex);
                     }
                 }
-                else // —§ˆÊ‚Ìƒf[ƒ^‚ğ“ü‚ê‚é
+                else // ç«‹ä½ã®ãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã‚‹
                 {
                     StreamWriter writer;
                     controllerPos.standPosR = LocalPos_R;
@@ -98,14 +98,14 @@ public class MesurementController : MonoBehaviour
                     }
                     catch (System.IO.IOException ex)
                     {
-                        Debug.Log("3 ƒtƒ@ƒCƒ‹‚ğŠJ‚­‚Æ‚«‚ÉƒGƒ‰[‚É‚È‚è‚Ü‚µ‚½" + ex);
+                        Debug.Log("3 ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã¨ãã«ã‚¨ãƒ©ãƒ¼ã«ãªã‚Šã¾ã—ãŸ" + ex);
                     }
                 }
 
             }
-            else // ƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚È‚¢ê‡
+            else // ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ãªã„å ´åˆ
             {
-                if (runMode == 1) // ÀˆÊ‚Ìƒf[ƒ^‚ğ“ü‚ê‚é
+                if (runMode == 1) // åº§ä½ã®ãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã‚‹
                 {
                     StreamWriter writer;
                     ControllerPos controllerPos = new ControllerPos();
@@ -124,10 +124,10 @@ public class MesurementController : MonoBehaviour
                     }
                     catch (System.IO.IOException ex)
                     {
-                        Debug.Log("4 ƒtƒ@ƒCƒ‹‚ğŠJ‚­‚Æ‚«‚ÉƒGƒ‰[‚É‚È‚è‚Ü‚µ‚½" + ex);
+                        Debug.Log("4 ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã¨ãã«ã‚¨ãƒ©ãƒ¼ã«ãªã‚Šã¾ã—ãŸ" + ex);
                     }
                 }
-                else // —§ˆÊ‚Ìƒf[ƒ^‚ğ“ü‚ê‚é
+                else // ç«‹ä½ã®ãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã‚‹
                 {
                     StreamWriter writer;
                     ControllerPos controllerPos = new ControllerPos();
@@ -146,22 +146,22 @@ public class MesurementController : MonoBehaviour
                     }
                     catch (System.IO.IOException ex)
                     {
-                        Debug.Log("5 ƒtƒ@ƒCƒ‹‚ğŠJ‚­‚Æ‚«‚ÉƒGƒ‰[‚É‚È‚è‚Ü‚µ‚½" + ex);
+                        Debug.Log("5 ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã¨ãã«ã‚¨ãƒ©ãƒ¼ã«ãªã‚Šã¾ã—ãŸ" + ex);
                     }
                 }
             }
-            // ƒXƒ^[ƒgƒƒjƒ…[‚ÉØ‚è‘Ö‚¦‚é
+            // ã‚¹ã‚¿ãƒ¼ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
             SceneManager.LoadScene("StartHere");
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
-            // ƒXƒ^[ƒgƒƒjƒ…[‚ÉØ‚è‘Ö‚¦‚é
+            // ã‚¹ã‚¿ãƒ¼ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
             SceneManager.LoadScene("StartHere");
         }
     }
 
     //
-    // class ‚ğì¬‚·‚é
+    // class ã‚’ä½œæˆã™ã‚‹
     //
     [System.Serializable]
     public class ControllerPos

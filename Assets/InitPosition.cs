@@ -8,28 +8,37 @@ using System.IO;
 
 
 //
-// Sphere100 のコントロール
+// 手のコントロール
 //
 
 public class InitPosition : MonoBehaviour
 {
-    // 現在の位置
-    Vector3 currentPos;
 
-    // 現在のコントローラ L の位置・姿勢
-    Vector3 controllerPos;
-    Quaternion controllerOri;
-    // ターゲットコントローラ L の位置・姿勢
-    Vector3 targetPos;
-    Quaternion targetOri;
-    // 移動量
-    Vector3 offsetPos;
-    // 手動の移動量
-    Vector3 offset = new Vector3(0.0f, 0.0f, 0.0f);
+    // 現在のコントローラ LとR の位置・姿勢
+    Vector3 controllerLpos = new Vector3(0.0f, 0.0f, 0.0f);
+    Quaternion controllerLrot = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+    Vector3 controllerRpos = new Vector3(0.0f, 0.0f, 0.0f);
+    Quaternion controllerRrot = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
 
+    // 計測記録されたコントローラ LとR の位置・姿勢
+    Vector3 recordedLpos = new Vector3(0.0f, 0.0f, 0.0f);
+    Quaternion recordedLrot = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+    Vector3 recordedRpos = new Vector3(0.0f, 0.0f, 0.0f);
+    Quaternion recordedRrot = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+
+    // コントローラ LからR に向かう位置・姿勢
+    Vector3 LtoRpos = new Vector3(0.0f, 0.0f, 0.0f);
+    Quaternion LtoRrot = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+
+    // Oculusから見た手の位置・姿勢
+    Vector3 OtoHandpos = new Vector3(0.0f, 0.0f, 0.0f);
+    Quaternion OtoHandrot = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+
+    //------------------------------------------------
     // Start is called before the first frame update
     void Start()
     {
+
         //「MODE」というキーで保存されているInt値を読み込み
         int runMode = PlayerPrefs.GetInt("MODE");
         // 読み込み
@@ -50,35 +59,44 @@ public class InitPosition : MonoBehaviour
         if (runMode == 1) // 座位のデータを入れる
         {
 
-            // Oculusから見たコントローラの相対位置
-            targetPos = initialControllerPos.sitPosL;
-            targetOri = initialControllerPos.sitRotationL;
+            // 事前に計測された、Oculusから見たコントローラの相対位置
+            recordedLpos = initialControllerPos.sitPosL;
+            recordedLrot = initialControllerPos.sitRotationL;
+            recordedRpos = initialControllerPos.sitPosR;
+            recordedRrot = initialControllerPos.sitRotationR;
         }
         else // 立位のデータを入れる
         {
-            // Oculusから見たコントローラの相対位置
-            targetPos = initialControllerPos.standPosL;
-            targetOri = initialControllerPos.standRotationL;
+            // 事前に計測された、Oculusから見たコントローラの相対位置
+            recordedLpos = initialControllerPos.standPosL;
+            recordedLrot = initialControllerPos.standRotationL;
+            recordedRpos = initialControllerPos.sitPosR;
+            recordedRrot = initialControllerPos.sitRotationR;
         }
-
+        Debug.Log($"Lpos: {recordedLpos:0.000}  Lrot:{recordedLrot:0.000}  Rpos:{recordedRpos:0.000} Rrot:{recordedRrot:0.000}");
+    // コントローラ LからR に向かう位置・姿勢を求める
+        LtoRpos = recordedRpos - recordedLpos;
+//不要        LtoRrot = Quaternion.Inverse(recordedLrot)*recordedRrot;
+        Debug.Log($"LtoRpos: {LtoRpos:0.000}  LtoRrot:{LtoRrot:0.000}");
     }
 
     // Update is called once per frame
     void Update()
     {
         //
-        // 球をOculusの追従させて移動させる
+        // 手をOculusの追従させて移動させる
         //
-        // Oculusから見たコントローラの相対位置
-        controllerPos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
-        controllerOri = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch);
-        // 移動量の計算　元の位置に戻るためのベクトル量
-        offsetPos = controllerPos - targetPos;
-        // 今の位置
-        currentPos = this.transform.position;  //
+        // Oculusから見たコントローラLの相対位置
+        controllerLpos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
+//不要        controllerLrot = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch);
+
+        // Oculusから見た手の位置・姿勢
+        OtoHandpos = controllerLpos + LtoRpos;
+//不要        OtoHandrot = controllerLrot * LtoRrot;
+
 
         //
-        // 球を手動で移動させる
+        // 手を手動で移動させる
         //
         var keyboard = Keyboard.current;
         if (keyboard != null)
@@ -86,59 +104,72 @@ public class InitPosition : MonoBehaviour
             //            Debug.Log("キーボード");
             if (keyboard.upArrowKey.wasPressedThisFrame)
             {
-                offset.z = offset.z + 0.01f;
+                OtoHandpos.z = OtoHandpos.z + 0.01f;
 //                Debug.Log("↑" + $" Offset: {offset:0.000}");
             }
             else if (keyboard.rightArrowKey.wasPressedThisFrame)
             {
-                offset.x = offset.x + 0.01f;
+                OtoHandpos.x = OtoHandpos.x + 0.01f;
 //                Debug.Log("→" + $" Offset: {offset:0.000}");
             }
             else if (keyboard.downArrowKey.wasPressedThisFrame)
             {
-                offset.z = offset.z - 0.01f;
+                OtoHandpos.z = OtoHandpos.z - 0.01f;
 //                Debug.Log("↓" + $" Offset: {offset:0.000}");
             }
             else if (keyboard.leftArrowKey.wasPressedThisFrame)
             {
-                offset.x = offset.x - 0.01f;
+                OtoHandpos.x = OtoHandpos.x - 0.01f;
 //                Debug.Log("←" + $" Offset: {offset:0.000}");
             }
             else if (keyboard.rightBracketKey.wasPressedThisFrame)
             {
-                offset.y = offset.y - 0.01f;
+                OtoHandpos.y = OtoHandpos.y - 0.01f;
 //                Debug.Log("  ]" + $" Offset: {offset:0.000}");
             }
             else if (keyboard.leftBracketKey.wasPressedThisFrame)
             {
-                offset.y = offset.y + 0.01f;
+                OtoHandpos.y = OtoHandpos.y + 0.01f;
 //                Debug.Log("  [" + $" Offset: {offset:0.000}");
             }
             else if (keyboard.backspaceKey.wasPressedThisFrame)
             {
-                offset = new Vector3(0.0f, 0.0f, 0.0f);
+                OtoHandpos = new Vector3( 0f, 0f, 0f);
  //               Debug.Log("Reset Position" + $" =  Offset:{offset:0.000}");
             }
             else if (keyboard.qKey.wasPressedThisFrame)
             {
                 // シーン間でオフセットデータの共有
-                string offsetStr = offset.ToString("F5");
-                PlayerPrefs.SetString("OFFSET", offsetStr);
+                string OtoHandPosStr = OtoHandpos.ToString("F5");
+                PlayerPrefs.SetString("OtoHandPosStr", OtoHandPosStr);
                 PlayerPrefs.Save();
 
-                Debug.Log("OffsetString:" + offsetStr);
+                Debug.Log("OtoHandPosStr:" + OtoHandPosStr);
 
                 // スタートメニューに切り替える
                 SceneManager.LoadScene("StartHere");
             }
         }
-        // 移動
-        this.transform.position = offsetPos + offset;   // 座標を設定
 
 
-        Debug.Log($"Now: {currentPos:0.000}  Offset:{offsetPos:0.000} Next:{this.transform.position:0.000}  Scale:{this.transform.localScale:0.0}");
-//        Debug.Log("Now: " + currentPos + " Offset: " + offsetPos + " Next: " + this.transform.position + " Scale: " + this.transform.localScale);
+        // 手を移動
 
+        Vector3 _axis = Vector3.right;
+        var angle = 45;
+        Quaternion rotation = recordedRrot * Quaternion.AngleAxis(angle, _axis); // * recordedRrot;
+        _axis = Vector3.up;
+        angle = 90;
+        this.transform.rotation = rotation * Quaternion.AngleAxis(angle, _axis); // * recordedRrot;
+        Vector3 offset = new Vector3(-0.14f, 0.0f, 0.0f);
+        this.transform.position = OtoHandpos + offset;   // 併進
+
+//        Quaternion rotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch) * Quaternion.AngleAxis(angle, _axis); // * recordedRrot;
+//        this.transform.rotation = Quaternion.AngleAxis(angle, _axis) * recordedRrot;   // 回転
+
+//不要        this.transform.rotation = OtoHandrot;   // 回転
+
+
+        Debug.Log($"Now: {controllerLpos:0.000}  LtoRpos:{LtoRpos:0.000}  Scale:{this.transform.localScale:0.0}");
     }
 
 

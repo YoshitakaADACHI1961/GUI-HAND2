@@ -1,7 +1,7 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; // UnityEngine.SceneManagemnt‚Ì‹@”\‚ğg—p
+using UnityEngine.SceneManagement; // UnityEngine.SceneManagemntã®æ©Ÿèƒ½ã‚’ä½¿ç”¨
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
@@ -22,7 +22,7 @@ public class StartHere : MonoBehaviour
         {
             if (keyboard.bKey.wasPressedThisFrame)
             {
-                // ÀˆÊ‚Å‚Ì‰ŠúˆÊ’u‚ğŒv‘ª‚µ‚ÄˆÊ’up¨ƒf[ƒ^‚ğ•Û‘¶‚·‚é
+                // åº§ä½ã§ã®åˆæœŸä½ç½®ã‚’è¨ˆæ¸¬ã—ã¦ä½ç½®å§¿å‹¢ãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜ã™ã‚‹
                 // 
                 PlayerPrefs.SetInt("MODE", 1);
                 PlayerPrefs.Save();
@@ -31,7 +31,7 @@ public class StartHere : MonoBehaviour
             }
             else if (keyboard.mKey.wasPressedThisFrame)
             {
-                // —§ˆÊ‚Å‚Ì‰ŠúˆÊ’u‚ğŒv‘ª‚µ‚ÄˆÊ’up¨ƒf[ƒ^‚ğ•Û‘¶‚·‚é
+                // ç«‹ä½ã§ã®åˆæœŸä½ç½®ã‚’è¨ˆæ¸¬ã—ã¦ä½ç½®å§¿å‹¢ãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜ã™ã‚‹
                 // 
                 PlayerPrefs.SetInt("MODE", 2);
                 PlayerPrefs.Save();
@@ -39,42 +39,42 @@ public class StartHere : MonoBehaviour
             }
             else if (keyboard.cKey.wasPressedThisFrame)
             {
-                // ÀˆÊ‚ÌƒLƒƒƒŠƒuƒŒ[ƒVƒ‡ƒ“
+                // åº§ä½ã®ã‚­ãƒ£ãƒªãƒ–ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
                 PlayerPrefs.SetInt("MODE", 1);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("InitPosition");
             }
             else if (keyboard.zKey.wasPressedThisFrame)
             {
-                // —§ˆÊ‚ÌƒLƒƒƒŠƒuƒŒ[ƒVƒ‡ƒ“
+                // ç«‹ä½ã®ã‚­ãƒ£ãƒªãƒ–ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
                 PlayerPrefs.SetInt("MODE", 2);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("InitPosition");
             }
             else if (keyboard.rKey.wasPressedThisFrame)
             {
-                // ÀˆÊ‚ÌÀs
+                // åº§ä½ã®å®Ÿè¡Œ
                 PlayerPrefs.SetInt("MODE", 1);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("TrainingScene");
             }
             else if (keyboard.yKey.wasPressedThisFrame)
             {
-                // —§ˆÊ‚ÌÀs
+                // ç«‹ä½ã®å®Ÿè¡Œ
                 PlayerPrefs.SetInt("MODE", 2);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("TrainingScene");
             }
             else if (keyboard.oKey.wasPressedThisFrame)
             {
-                // ÀˆÊ‚ÌÀs
+                // åº§ä½ã®å®Ÿè¡Œ
                 PlayerPrefs.SetInt("MODE", 1);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("MovieScene");
             }
             else if (keyboard.uKey.wasPressedThisFrame)
             {
-                // —§ˆÊ‚ÌÀs
+                // ç«‹ä½ã®å®Ÿè¡Œ
                 PlayerPrefs.SetInt("MODE", 2);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("MovieScene");
