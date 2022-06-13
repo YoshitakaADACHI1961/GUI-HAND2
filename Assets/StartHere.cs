@@ -29,15 +29,6 @@ public class StartHere : MonoBehaviour
                 SceneManager.LoadScene("MeasurementScene");
 
             }
-            else if (keyboard.mKey.wasPressedThisFrame)
-            {
-                // 立位での初期位置を計測して位置姿勢データを保存する
-                // 
-                PlayerPrefs.SetInt("MODE", 2);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("MeasurementScene");
-
-            }
             else if (keyboard.cKey.wasPressedThisFrame)
             {
                 // 座位のキャリブレーション
@@ -47,26 +38,10 @@ public class StartHere : MonoBehaviour
 
 
             }
-            else if (keyboard.zKey.wasPressedThisFrame)
-            {
-                // 立位のキャリブレーション
-                PlayerPrefs.SetInt("MODE", 2);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("InitPosition");
-
-
-            }
             else if (keyboard.rKey.wasPressedThisFrame)
             {
                 // 座位の実行
                 PlayerPrefs.SetInt("MODE", 1);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("TrainingScene");
-            }
-            else if (keyboard.yKey.wasPressedThisFrame)
-            {
-                // 立位の実行
-                PlayerPrefs.SetInt("MODE", 2);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("TrainingScene");
             }

@@ -7,8 +7,7 @@ using System;
 
 // 
 // Oculusから見たコントローラ（左右）の位置と姿勢を計測する
-// 「b」を押すと座位の計測
-// 「ｍ」を押すと立位の計測
+// 座位と立位の計測ができるように作成したが座位しか使っていない
 // 
 public class MesurementController : MonoBehaviour
 {
