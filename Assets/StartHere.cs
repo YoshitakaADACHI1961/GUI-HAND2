@@ -45,6 +45,15 @@ public class StartHere : MonoBehaviour
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("TrainingScene");
             }
+            else if (keyboard.eKey.wasPressedThisFrame)
+            {
+                // E　で終了
+                #if UNITY_EDITOR
+                  UnityEditor.EditorApplication.isPlaying = false;
+                #elif UNITY_STANDALONE
+                  UnityEngine.Application.Quit();
+                #endif
+            }
         }
     }
 }

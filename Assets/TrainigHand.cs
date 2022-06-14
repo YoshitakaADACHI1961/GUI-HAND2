@@ -72,10 +72,11 @@ public class TrainigHand : MonoBehaviour
             recordedRpos = initialControllerPos.sitPosR;
             recordedRrot = initialControllerPos.sitRotationR;
         }
-        Debug.Log($"Lpos: {recordedLpos:0.000}  Lrot:{recordedLrot:0.000}  Rpos:{recordedRpos:0.000} Rrot:{recordedRrot:0.000}");
+
     // コントローラ LからR に向かう位置・姿勢を求める
         LtoRpos = recordedRpos - recordedLpos;
-        Debug.Log($"LtoRpos: {LtoRpos:0.000}  LtoRrot:{LtoRrot:0.000}");
+
+        Debug.Log("Training:　初期化が終了しました");
     }
 
     // Update is called once per frame
@@ -91,7 +92,6 @@ public class TrainigHand : MonoBehaviour
         OtoHandpos = controllerLpos + LtoRpos;
 
         //
-/*
         var keyboard = Keyboard.current;
         if (keyboard != null)
         {
@@ -99,23 +99,25 @@ public class TrainigHand : MonoBehaviour
             if (keyboard.qKey.wasPressedThisFrame)
             {
                 // スタートメニューに切り替える
+                Debug.Log("initPosition: Qが押された");
                 SceneManager.LoadScene("StartHere");
             }
         }
-*/
 
 
         // 手を移動
-        Vector3 _axis = Vector3.right;
-        var angle = 45;
+
+        Vector3 _axis = new Vector3(1.0f, 0.0f, 0.0f);
+        var angle = 225;
         Quaternion rotation = recordedRrot * Quaternion.AngleAxis(angle, _axis); // * recordedRrot;
-        _axis = Vector3.up;
+        _axis = new Vector3(0.0f, 1.0f, 0.0f);
         angle = 90;
         this.transform.rotation = rotation * Quaternion.AngleAxis(angle, _axis); // * recordedRrot;
-        Vector3 offset = new Vector3(-0.14f, 0.0f, 0.0f);
+
+        Vector3 offset = new Vector3(-0.07f, 0.0f, 0.00f);
         this.transform.position = OtoHandpos + offset;   // 併進
 
-        Debug.Log($"Now: {controllerLpos:0.000}  LtoRpos:{LtoRpos:0.000}  Scale:{this.transform.localScale:0.0}");
+
     }
 
 
